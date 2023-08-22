@@ -6,9 +6,9 @@
   "type": "module",
   "scripts": {
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --verbose",
-    "start": "node --experimental-specifier-resolution=node index.js",
+    "start": "NODE_ENV=production node --experimental-specifier-resolution=node index.js",
     "lint": "node_modules/.bin/eslint .",
-    "dev": "./node_modules/.bin/nodemon --experimental-specifier-resolution=node index.js"
+    "dev": "NODE_ENV=development ./node_modules/.bin/nodemon --experimental-specifier-resolution=node index.js"
   },
   "author": "Adria Huertas",
   "license": "ISC",
