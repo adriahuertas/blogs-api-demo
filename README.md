@@ -33,3 +33,9 @@ You can check the deployed version in render https://blog-api-demo.onrender.com/
 ## To install
 
 After forking this repo, you need to create .env file to define PORT and MONGODB_URI constants.
+
+## To test
+
+- All tests: npm test
+- Test a file: npm test -- file. Example: npm test -- tests/blog_api.test.js
+- Run one test: npm test -- -t 'test'. Example: npm test -- -t 'a specific blog is within the returned notes'

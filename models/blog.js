@@ -13,7 +13,7 @@ const blogSchema = new mongoose.Schema({
   },
   author: { type: String, minlength: 3, required: true },
   url: { type: String, required: true },
-  date: { type: Date, required: true },
+  date: Date,
   likes: Number,
 });
 
