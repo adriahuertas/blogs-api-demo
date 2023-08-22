@@ -6,9 +6,9 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js",
+    "start": "node --experimental-specifier-resolution=node index.js",
     "lint": "eslint .",
-    "dev": "./node_modules/.bin/nodemon index.js"
+    "dev": "./node_modules/.bin/nodemon --experimental-specifier-resolution=node index.js"
   },
   "author": "Adria Huertas",
   "license": "ISC",

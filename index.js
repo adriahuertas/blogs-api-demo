@@ -1,7 +1,7 @@
-import * as logger from "./utils/logger.js";
-import * as config from "./utils/config.js";
-import http from "http";
-import app from "./app.js";
+import http from 'http';
+import * as logger from './utils/logger';
+import * as config from './utils/config';
+import app from './app';
 
 const server = http.createServer(app);
 
