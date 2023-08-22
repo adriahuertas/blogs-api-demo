@@ -20,5 +20,12 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module',
   },
-  rules: {},
+  rules: {
+    'comma-dangle': 'off',
+    'object-curly-newline': 'off',
+    'no-confusing-arrow': 'off',
+    'implicit-arrow-linebreak': 'off',
+    'import/no-extraneous-dependencies': 'off',
+    'function-paren-newline': 'off',
+  },
 };

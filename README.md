@@ -8,7 +8,13 @@ This is an API demo made with JavaScript/Express
 - Nodemon as development dependency
 - Version control with GIT/GITHUB
 - Deployed using render.com. [Check it out!](https://blog-api-demo.onrender.com/)
-- It uses a MongoDB storage deployed in the cloud (mongodb.com/atlas)
+- MongoDB storage deployed in the cloud (mongodb.com/atlas)
+- Unit and integration testing with Jest
+- Folder structure:
+  - Controllers
+  - Models
+  - Tests
+  - Utils
 
 ## End Points:
 
