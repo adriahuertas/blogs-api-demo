@@ -1,3 +1,5 @@
+/* eslint-disable no-param-reassign */
+/* eslint-disable no-underscore-dangle */
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import mongooseUniqueValidator from 'mongoose-unique-validator';
@@ -21,9 +23,10 @@ blogSchema.plugin(mongooseUniqueValidator);
 
 blogSchema.set('toJSON', {
   transform: (document, returnedObject) => {
-    // eslint-disable-next-line no-underscore-dangle, no-param-reassign
     delete returnedObject.__v;
+    delete returnedObject._id;
   },
+  virtuals: true,
 });
 
 export default mongoose.model('Blog', blogSchema);

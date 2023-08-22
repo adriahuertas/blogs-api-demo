@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
+import 'express-async-errors';
 
 import * as config from './utils/config';
 import blogsRouter from './controllers/blogs';

@@ -15,12 +15,15 @@ This is an API demo made with JavaScript/Express
   - Models
   - Tests
   - Utils
+- Error control with express-async-errors instead of try/catch
 
 ## End Points:
 
 - /: Hello world
-- /api/blogs
-- /api/blogs/id
+- GET /api/blogs
+- GET /api/blogs/id
+- POST /api/blogs
+- DELETE /api/blogs/id
 
 ## To run
 
