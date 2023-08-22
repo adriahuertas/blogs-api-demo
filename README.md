@@ -11,10 +11,15 @@ This is an API demo made with JavaScript/Express
 - MongoDB storage deployed in the cloud (mongodb.com/atlas)
 - Unit and integration testing with Jest
 - Folder structure:
-  - Controllers
-  - Models
-  - Tests
-  - Utils
+
+  - Root:
+    - Controllers/
+    - Models/
+    - Tests/
+    - Utils/
+    - app.js
+    - index.js
+
 - Error control with express-async-errors instead of try/catch
 
 ## End Points:
