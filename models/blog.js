@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
-import dotenv from "dotenv";
-import mongooseUniqueValidator from "mongoose-unique-validator";
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+import mongooseUniqueValidator from 'mongoose-unique-validator';
 
 dotenv.config();
 
@@ -16,6 +16,13 @@ const blogSchema = new mongoose.Schema({
   likes: Number,
 });
 
-const Blog = mongoose.model("Blog", blogSchema);
+blogSchema.plugin(mongooseUniqueValidator);
 
-export default Blog;
+blogSchema.set('toJSON', {
+  transform: (document, returnedObject) => {
+    // eslint-disable-next-line no-underscore-dangle, no-param-reassign
+    delete returnedObject.__v;
+  },
+});
+
+export default mongoose.model('Blog', blogSchema);

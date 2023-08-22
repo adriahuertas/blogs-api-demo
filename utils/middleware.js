@@ -1,4 +1,4 @@
-import * as logger from './logger.js';
+import * as logger from './logger';
 
 const requestLogger = (request, response, next) => {
   logger.info('Method:', request.method);
