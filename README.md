@@ -9,6 +9,7 @@ This is an API demo made with JavaScript/Express
 - Version control with GIT/GITHUB
 - Deployed using render.com. [Check it out!](https://blog-api-demo.onrender.com/)
 - MongoDB storage deployed in the cloud (mongodb.com/atlas)
+- Mongoose to manage MongoDB
 - Unit and integration testing with Jest and supertest
 - Folder structure:
 
