@@ -5,7 +5,7 @@ import User from '../models/user';
 
 const usersRouter = express.Router();
 
-usersRouter.get('/', async (req, res) => {
+usersRouter.post('/', async (req, res) => {
   const { username, name, password } = req.body;
 
   const saltRounds = 10;
