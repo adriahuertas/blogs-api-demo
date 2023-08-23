@@ -12,7 +12,6 @@ This is an API demo made with JavaScript/Express
 - Mongoose to manage MongoDB
 - Unit and integration testing with Jest and supertest
 - Folder structure:
-
   - Root:
     - Controllers/
     - Models/
@@ -20,7 +19,6 @@ This is an API demo made with JavaScript/Express
     - Utils/
     - app.js
     - index.js
-
 - Error control with express-async-errors instead of try/catch
 
 ## End Points:

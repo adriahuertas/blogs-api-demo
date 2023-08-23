@@ -17,6 +17,10 @@ const blogSchema = new mongoose.Schema({
   url: { type: String, required: true },
   date: Date,
   likes: Number,
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+  },
 });
 
 blogSchema.plugin(mongooseUniqueValidator);
