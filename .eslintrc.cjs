@@ -27,5 +27,6 @@ module.exports = {
     'implicit-arrow-linebreak': 'off',
     'import/no-extraneous-dependencies': 'off',
     'function-paren-newline': 'off',
+    'linebreak-style': 'off',
   },
 };

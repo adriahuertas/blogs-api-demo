@@ -9,7 +9,7 @@ This is an API demo made with JavaScript/Express
 - Version control with GIT/GITHUB
 - Deployed using render.com. [Check it out!](https://blog-api-demo.onrender.com/)
 - MongoDB storage deployed in the cloud (mongodb.com/atlas)
-- Unit and integration testing with Jest
+- Unit and integration testing with Jest and supertest
 - Folder structure:
 
   - Root:
@@ -40,7 +40,7 @@ You can check the deployed version in render https://blog-api-demo.onrender.com/
 
 ## To install
 
-After forking this repo, you need to create .env file to define PORT and MONGODB_URI constants.
+After forking this repo, you need to create .env file to define PORT and MONGODB_URI.
 
 ## To test
 
