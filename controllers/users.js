@@ -5,6 +5,11 @@ import User from '../models/user';
 
 const usersRouter = express.Router();
 
+usersRouter.get('/', async (req, res) => {
+  const users = await User.find({});
+  res.json(users.map((u) => u.toJSON()));
+});
+
 usersRouter.post('/', async (req, res) => {
   const { username, name, password } = req.body;
 
