@@ -4,7 +4,6 @@ import supertest from 'supertest';
 import app from '../app';
 import Blog from '../models/blog';
 import * as helper from './test_helper';
-import User from '../models/user';
 
 const api = supertest(app);
 

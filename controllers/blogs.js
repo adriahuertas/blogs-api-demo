@@ -33,13 +33,11 @@ blogsRouter.post('/', async (req, res) => {
     user: user.id,
   });
 
-  console.log(user);
-  console.log('Userid: ', user.id);
   const savedBlog = await blog.save();
   user.blogs = user.blogs.concat(savedBlog.id);
   await user.save();
 
-  res.status(201).json(savedBlog.toJSON());
+  return res.status(201).json(savedBlog.toJSON());
 });
 
 blogsRouter.get('/:id', async (req, res) => {

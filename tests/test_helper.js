@@ -48,16 +48,6 @@ const initialBlogs = [
   },
 ];
 
-const initialUsers = [
-  {
-    username: 'root',
-    name: 'Superuser',
-    passwordHash:
-      ' $2a$10$eXRw.KQI9GQv3dg8Hbv2jeiZDA7pCGPJEgJTnS5fdiNFyDs1iIKnW ',
-    blogs: [],
-  },
-];
-
 const nonExistingId = async () => {
   const blog = new Blog({
     title: 'willremovethissoon',
