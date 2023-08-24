@@ -70,6 +70,7 @@ describe('addition of a new blog', () => {
     // Get a valid user
     const usersAtStart = await helper.usersInDb();
     const user = usersAtStart[0];
+
     const newBlog = {
       title: 'Creating a blog with React',
       author: 'Matti Luukkainen',

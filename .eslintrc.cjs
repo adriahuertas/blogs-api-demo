@@ -28,5 +28,6 @@ module.exports = {
     'import/no-extraneous-dependencies': 'off',
     'function-paren-newline': 'off',
     'linebreak-style': 'off',
+    'consistent-return': 'off',
   },
 };
