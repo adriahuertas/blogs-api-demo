@@ -16,8 +16,7 @@ usersRouter.get('/', async (req, res) => {
 });
 
 usersRouter.post('/', async (req, res) => {
-  const { username, name, password, notes } = req.body;
-  console.log(req.body);
+  const { username, name, password } = req.body;
 
   const saltRounds = 10;
   const passwordHash = await bcrypt.hash(password, saltRounds);
@@ -26,7 +25,7 @@ usersRouter.post('/', async (req, res) => {
     username,
     name,
     passwordHash,
-    notes,
+    blogs: [],
   });
 
   const savedUser = await user.save();

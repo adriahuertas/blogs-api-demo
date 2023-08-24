@@ -14,20 +14,27 @@ blogsRouter.get('/', async (req, res) => {
 });
 
 blogsRouter.post('/', async (req, res) => {
-  const { title, author, url, likes, date, userId } = req.body;
+  const { title, author, url, likes, userId } = req.body;
 
   // Find user
-  const user = User.findById(userId);
+  const user = await User.findById(userId);
+
+  if (!user) {
+    return res.status(400).json({ error: 'User not found' });
+  }
 
   const blog = new Blog({
     title,
     author,
     url,
     likes: likes || 0,
-    date,
-    user: userId,
+    date: new Date(),
+    // eslint-disable-next-line no-underscore-dangle
+    user: user.id,
   });
 
+  console.log(user);
+  console.log('Userid: ', user.id);
   const savedBlog = await blog.save();
   user.blogs = user.blogs.concat(savedBlog.id);
   await user.save();

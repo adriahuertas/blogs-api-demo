@@ -1,18 +1,21 @@
 import mongoose from 'mongoose';
 import supertest from 'supertest';
+
 import app from '../app';
 import Blog from '../models/blog';
 import * as helper from './test_helper';
+import User from '../models/user';
 
 const api = supertest(app);
 
 beforeEach(async () => {
+  // Blog API init
   await Blog.deleteMany({});
   await Blog.insertMany(helper.initialBlogs);
 });
 
 describe('when there is initially some blogs saved', () => {
-  test('notes are returned as json', async () => {
+  test('blogs are returned as json', async () => {
     await api
       .get('/api/blogs')
       .expect(200)
@@ -45,7 +48,9 @@ describe('viewing a specific blog', () => {
       .expect(200)
       .expect('Content-Type', /application\/json/);
 
-    expect(resultBlog.body).toEqual(blogToView);
+    const processedBlogToView = JSON.parse(JSON.stringify(blogToView));
+
+    expect(resultBlog.body).toEqual(processedBlogToView);
   });
 
   test('fails with statuscode 404 if blog does not exist', async () => {
@@ -63,11 +68,15 @@ describe('viewing a specific blog', () => {
 
 describe('addition of a new blog', () => {
   test('succeeds with valid data', async () => {
+    // Get a valid user
+    const usersAtStart = await helper.usersInDb();
+    const user = usersAtStart[0];
     const newBlog = {
       title: 'Creating a blog with React',
       author: 'Matti Luukkainen',
       url: 'https://fullstackopen.com/en/part4/testing_the_backend#exercises-4-1-4-2',
       likes: 0,
+      userId: user.id,
     };
 
     await api
