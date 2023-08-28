@@ -1,26 +1,18 @@
-import bcrypt from 'bcrypt';
 import mongoose from 'mongoose';
 import supertest from 'supertest';
 
-import User from '../models/user';
 import * as helper from './test_helper';
 import app from '../app';
 
 const api = supertest(app);
 
+beforeEach(async () => {
+  await helper.initTestDb();
+});
+
 describe('when there is initially one user in db', () => {
-  beforeEach(async () => {
-    await User.deleteMany({});
-
-    const passwordHash = await bcrypt.hash('sekret', 10);
-    const user = new User({ username: 'root', name: 'Pepe', passwordHash });
-
-    await user.save();
-  });
-
   test('creation succeeds with a fresh username', async () => {
     const usersAtStart = await helper.usersInDb();
-
     const newUser = {
       username: 'mluukkai',
       name: 'Matti Luukkainen',
@@ -42,7 +34,7 @@ describe('when there is initially one user in db', () => {
 
   test('creation fails with proper statuscode and message if username already taken', async () => {
     const usersAtStart = await helper.usersInDb();
-
+    console.log(usersAtStart);
     const newUser = {
       username: 'root',
       name: 'Superuser',

@@ -3,14 +3,28 @@ import supertest from 'supertest';
 
 import app from '../app';
 import Blog from '../models/blog';
+import User from '../models/user';
 import * as helper from './test_helper';
 
 const api = supertest(app);
 
+// beforeEach(async () => {
+//   // Blog API init
+//   await User.deleteMany({});
+//   await User.insertMany(helper.initialUsers);
+//   // Get id test user
+//   const usersAtStart = await helper.usersInDb();
+//   const user = usersAtStart[1];
+
+//   const initialBlogs = helper.initialBlogs.map((blog) => ({
+//     ...blog,
+//     user: user.id,
+//   }));
+//   await Blog.deleteMany({});
+//   await Blog.insertMany(initialBlogs);
+// });
 beforeEach(async () => {
-  // Blog API init
-  await Blog.deleteMany({});
-  await Blog.insertMany(helper.initialBlogs);
+  await helper.initTestDb();
 });
 
 describe('when there is initially some blogs saved', () => {
@@ -69,7 +83,14 @@ describe('addition of a new blog', () => {
   test('succeeds with valid data', async () => {
     // Get a valid user
     const usersAtStart = await helper.usersInDb();
-    const user = usersAtStart[0];
+    const user = usersAtStart[1];
+    // Get token for user
+    const res = await api
+      .post('/api/login')
+      .send({ username: user.username, password: 'test' });
+
+    // eslint-disable-next-line no-underscore-dangle
+    const { token } = res._body;
 
     const newBlog = {
       title: 'Creating a blog with React',
@@ -81,6 +102,7 @@ describe('addition of a new blog', () => {
 
     await api
       .post('/api/blogs')
+      .set('Authorization', `bearer ${token}`)
       .send(newBlog)
       .expect(201)
       .expect('Content-Type', /application\/json/);
@@ -93,12 +115,25 @@ describe('addition of a new blog', () => {
   });
 
   test('fails with status code 400 if data invalid', async () => {
+    // Get a valid user
+    const usersAtStart = await helper.usersInDb();
+    const user = usersAtStart[1];
+    // Get token for user
+    const res = await api
+      .post('/api/login')
+      .send({ username: user.username, password: 'test' });
+    // eslint-disable-next-line no-underscore-dangle
+    const { token } = res._body;
     const newBlog = {
       title: 'New blog',
       date: new Date(),
     };
 
-    await api.post('/api/blogs').send(newBlog).expect(400);
+    await api
+      .post('/api/blogs')
+      .send(newBlog)
+      .set('Authorization', `bearer ${token}`)
+      .expect(400);
 
     const blogsAtEnd = await helper.blogsInDb();
 
@@ -107,11 +142,32 @@ describe('addition of a new blog', () => {
 });
 
 describe('deletion of a blog', () => {
+  // Get test user token
+  let token, username, id;
+  beforeAll(async () => {
+    // Get a valid user
+    const usersAtStart = await helper.usersInDb();
+    const user = usersAtStart[1];
+    // Get token for user
+    const res = await api
+      .post('/api/login')
+      .send({ username: user.username, password: 'test' });
+    // eslint-disable-next-line no-underscore-dangle
+    token = res._body.token;
+    // eslint-disable-next-line no-underscore-dangle
+    username = res._body.username;
+    console.log(res._body);
+  });
+
   test('succeeds with status code 204 if id is valid', async () => {
     const blogsAtStart = await helper.blogsInDb();
-    const blogToDelete = blogsAtStart[0];
-
-    await api.delete(`/api/blogs/${blogToDelete.id}`).expect(204);
+    const blogToDelete = blogsAtStart[2];
+    console.log(blogToDelete);
+    console.log(`bearer ${token}`);
+    await api
+      .delete(`/api/blogs/${blogToDelete.id}`)
+      .set('Authorization', `bearer ${token}`)
+      .expect(204);
 
     const blogsAtEnd = await helper.blogsInDb();
 
@@ -124,6 +180,19 @@ describe('deletion of a blog', () => {
 });
 
 describe('updating a blog', () => {
+  // Get test user token
+  let token;
+  beforeAll(async () => {
+    // Get a valid user
+    const usersAtStart = await helper.usersInDb();
+    const user = usersAtStart[1];
+    // Get token for user
+    const res = await api
+      .post('/api/login')
+      .send({ username: user.username, password: 'test' });
+    // eslint-disable-next-line no-underscore-dangle
+    token = res._body.token;
+  });
   test('succeeds with status code 200 if id is valid', async () => {
     const blogsAtStart = await helper.blogsInDb();
     const blogToUpdate = blogsAtStart[0];
@@ -137,6 +206,7 @@ describe('updating a blog', () => {
 
     await api
       .put(`/api/blogs/${blogToUpdate.id}`)
+      .set('Authorization', `bearer ${token}`)
       .send(updatedBlog)
       .expect(200);
 
@@ -157,7 +227,11 @@ describe('updating a blog', () => {
       likes: 15,
     };
 
-    await api.put(`/api/blogs/${invalidId}`).send(updatedBlog).expect(400);
+    await api
+      .put(`/api/blogs/${invalidId}`)
+      .set('Authorization', `bearer ${token}`)
+      .send(updatedBlog)
+      .expect(400);
 
     const blogsAtEnd = await helper.blogsInDb();
 
