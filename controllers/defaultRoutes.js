@@ -1,6 +1,6 @@
-import express from 'express';
+import express from 'express'
 
-const defaultRoutesRouter = express.Router();
+const defaultRoutesRouter = express.Router()
 
 defaultRoutesRouter.get('/', (request, response) => {
   response.send(`
@@ -11,8 +11,7 @@ defaultRoutesRouter.get('/', (request, response) => {
     /api/blogs/id<br>
     /api/users<br>
     /api/users/id</p><h3>Author: Adrià Huertas</h3>
-  `
-  );
-});
+  `)
+})
 
-export default defaultRoutesRouter;
+export default defaultRoutesRouter
