@@ -29,5 +29,7 @@ module.exports = {
     'function-paren-newline': 'off',
     'linebreak-style': 'off',
     'consistent-return': 'off',
+    'operator-linebreak': 'off',
+    semi: ['error', 'never'],
   },
-};
+}

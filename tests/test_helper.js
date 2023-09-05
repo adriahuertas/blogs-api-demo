@@ -1,7 +1,7 @@
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcrypt'
 
-import Blog from '../models/blog';
-import User from '../models/user';
+import Blog from '../models/blog'
+import User from '../models/user'
 
 // Dummy blogs for testing
 
@@ -42,7 +42,7 @@ const initialBlogs = [
     url: 'http://blog.cleancoder.com/uncle-bob/2016/05/01/TypeWars.html',
     likes: 2,
   },
-];
+]
 
 // Dummy users
 const initialUsers = [
@@ -56,7 +56,7 @@ const initialUsers = [
     name: 'Test user',
     passwordHash: await bcrypt.hash('test', 10),
   },
-];
+]
 
 const nonExistingId = async () => {
   const blog = new Blog({
@@ -64,38 +64,37 @@ const nonExistingId = async () => {
     author: 'author',
     url: 'url',
     likes: 50,
-    date: new Date(),
-  });
-  await blog.save();
-  await blog.deleteOne();
+  })
+  await blog.save()
+  await blog.deleteOne()
 
-  return blog.id.toString();
-};
+  return blog.id.toString()
+}
 
 const blogsInDb = async () => {
-  const blogs = await Blog.find({});
-  return blogs.map((blog) => blog.toJSON());
-};
+  const blogs = await Blog.find({})
+  return blogs.map((blog) => blog.toJSON())
+}
 
 const usersInDb = async () => {
-  const users = await User.find({});
-  return users.map((user) => user.toJSON());
-};
+  const users = await User.find({})
+  return users.map((user) => user.toJSON())
+}
 
 const initTestDb = async () => {
-  await Blog.deleteMany({});
-  await User.deleteMany({});
-  await User.insertMany(initialUsers);
+  await Blog.deleteMany({})
+  await User.deleteMany({})
+  await User.insertMany(initialUsers)
   // Get test user id
-  const usersAtStart = await usersInDb();
-  const user = usersAtStart[1];
+  const usersAtStart = await usersInDb()
+  const user = usersAtStart[1]
 
   const initialBlogsWithUser = initialBlogs.map((blog) => ({
     ...blog,
     user: user.id,
-  }));
-  await Blog.insertMany(initialBlogsWithUser);
-};
+  }))
+  await Blog.insertMany(initialBlogsWithUser)
+}
 
 export {
   initialBlogs,
@@ -104,4 +103,4 @@ export {
   blogsInDb,
   usersInDb,
   initTestDb,
-};
+}

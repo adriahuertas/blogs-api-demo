@@ -1,8 +1,8 @@
+import bcrypt from 'bcrypt'
 import mongoose from 'mongoose'
 import supertest from 'supertest'
 
 import app from '../app'
-import Blog from '../models/blog'
 import User from '../models/user'
 import * as helper from './test_helper'
 
@@ -141,42 +141,44 @@ describe('addition of a new blog', () => {
 })
 
 describe('deletion of a blog', () => {
-  // Get test user token
-  let token
-  let username
-  let id
-  beforeAll(async () => {
-    // Get a valid user
-    const usersAtStart = await helper.usersInDb()
-    const user = usersAtStart[1]
+  test('succeeds with status code 204 if id is valid', async () => {
+    // Create user
+    const user = new User({
+      username: 'test2',
+      name: 'Test user',
+      passwordHash: await bcrypt.hash('test2', 10),
+    })
+    // Save user
+    await user.save()
+    // Create new blog
+    const blog = {
+      title: 'willremovethissoon',
+      author: 'author',
+      url: 'url',
+      likes: 50,
+    }
     // Get token for user
     const res = await api
       .post('/api/login')
-      .send({ username: user.username, password: 'test' })
-    // eslint-disable-next-line no-underscore-dangle
-    token = res._body.token
-    // eslint-disable-next-line no-underscore-dangle
-    username = res._body.username
-    console.log(res._body)
-  })
+      .send({ username: 'test2', password: 'test2' })
 
-  test('succeeds with status code 204 if id is valid', async () => {
-    const blogsAtStart = await helper.blogsInDb()
-    const blogToDelete = blogsAtStart[2]
-    console.log(blogToDelete)
-    console.log(`bearer ${token}`)
+    const response = await api
+      .post('/api/blogs')
+      .set('Authorization', `bearer ${res.body.token}`)
+      .send(blog)
+
     await api
-      .delete(`/api/blogs/${blogToDelete.id}`)
-      .set('Authorization', `bearer ${token}`)
+      .delete(`/api/blogs/${response.body.id}`)
+      .set('Authorization', `bearer ${res.body.token}`)
       .expect(204)
 
     const blogsAtEnd = await helper.blogsInDb()
 
-    expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length - 1)
+    expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length)
 
     const titles = blogsAtEnd.map((r) => r.title)
 
-    expect(titles).not.toContain(blogToDelete.title)
+    expect(titles).not.toContain(blog.title)
   })
 })
 
