@@ -1,10 +1,10 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-underscore-dangle */
-import mongoose from 'mongoose';
-import dotenv from 'dotenv';
-import mongooseUniqueValidator from 'mongoose-unique-validator';
+import mongoose from 'mongoose'
+import dotenv from 'dotenv'
+import mongooseUniqueValidator from 'mongoose-unique-validator'
 
-dotenv.config();
+dotenv.config()
 
 const blogSchema = new mongoose.Schema({
   title: {
@@ -21,16 +21,16 @@ const blogSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
   },
-});
+})
 
-blogSchema.plugin(mongooseUniqueValidator);
+blogSchema.plugin(mongooseUniqueValidator)
 
 blogSchema.set('toJSON', {
   transform: (document, returnedObject) => {
-    delete returnedObject.__v;
-    delete returnedObject._id;
+    delete returnedObject.__v
+    delete returnedObject._id
   },
   virtuals: true,
-});
+})
 
-export default mongoose.model('Blog', blogSchema);
+export default mongoose.model('Blog', blogSchema)
