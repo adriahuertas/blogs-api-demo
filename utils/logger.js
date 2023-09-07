@@ -1,13 +1,13 @@
 const info = (...params) => {
   if (process.env.NODE_ENV !== 'test') {
-    console.error(...params);
+    console.error(...params)
   }
-};
+}
 
 const error = (...params) => {
   if (process.env.NODE_ENV !== 'test') {
-    console.error(...params);
+    console.error(...params)
   }
-};
+}
 
-export { info, error };
+export { info, error }
