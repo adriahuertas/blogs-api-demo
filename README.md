@@ -24,10 +24,17 @@ This is an API demo made with JavaScript/Express
 ## End Points:
 
 - /: Hello world
+
 - GET /api/blogs
 - GET /api/blogs/id
 - POST /api/blogs
 - DELETE /api/blogs/id
+
+- POST /api/login
+
+- GET /api/users
+- GET /api/users/id
+- POST /api/users
 
 ## To run
 
