@@ -35,6 +35,12 @@ app.use('/api/blogs', blogsRouter)
 app.use('/api/users', usersRouter)
 app.use('/', defaultRoutesRouter)
 
+if (process.env.NODE_ENV === 'test') {
+  import('./controllers/testing').then((testingRouter) => {
+    app.use('/api/testing', testingRouter.default)
+  })
+}
+
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)
 
