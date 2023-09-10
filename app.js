@@ -4,10 +4,13 @@ import mongoose from 'mongoose'
 import 'express-async-errors'
 
 import * as config from './utils/config'
+
 import blogsRouter from './controllers/blogs'
-import usersRouter from './controllers/users'
 import defaultRoutesRouter from './controllers/defaultRoutes'
 import loginRouter from './controllers/login'
+import testingRouter from './controllers/testing'
+import usersRouter from './controllers/users'
+
 import * as middleware from './utils/middleware'
 import * as logger from './utils/logger'
 
@@ -36,9 +39,7 @@ app.use('/api/users', usersRouter)
 app.use('/', defaultRoutesRouter)
 
 if (process.env.NODE_ENV === 'test') {
-  import('./controllers/testing').then((testingRouter) => {
-    app.use('/api/testing', testingRouter.default)
-  })
+  app.use('/api/testing', testingRouter)
 }
 
 app.use(middleware.unknownEndpoint)
