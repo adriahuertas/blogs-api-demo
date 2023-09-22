@@ -32,6 +32,7 @@ blogsRouter.post('/', userExtractor, async (req, res) => {
     likes: likes || 0,
     date: new Date(),
     user: user.id,
+    comments: [],
   })
 
   const savedBlog = await blog.save().then((result) =>
@@ -56,6 +57,22 @@ blogsRouter.get('/:id', async (req, res) => {
   } else {
     res.status(404).end()
   }
+})
+
+blogsRouter.post('/:id/comments', async (req, res) => {
+  const { id } = req.params
+  const blog = await Blog.findById(id).populate('user', {
+    username: 1,
+    name: 1,
+  })
+  if (blog) {
+    const { text } = req.body
+    const date = new Date()
+    blog.comments.push({ text, date })
+    const updatedBlog = await blog.save()
+    return res.status(201).json(updatedBlog.toJSON())
+  }
+  return res.status(404).end()
 })
 
 blogsRouter.put('/:id', userExtractor, async (req, res) => {

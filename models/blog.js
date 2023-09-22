@@ -21,6 +21,12 @@ const blogSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
   },
+  comments: [
+    {
+      text: String,
+      date: Date,
+    },
+  ],
 })
 
 blogSchema.plugin(mongooseUniqueValidator)
